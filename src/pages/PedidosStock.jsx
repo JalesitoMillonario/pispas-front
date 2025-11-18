@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,7 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 
 export default function PedidosStock() {
+  const navigate = useNavigate();
   const [pedidos, setPedidos] = useState([]);
 
   const loadPedidos = () => {
@@ -104,38 +106,51 @@ export default function PedidosStock() {
                   </div>
 
                   {pedido.notas && (
-                    <p className="text-xs text-gray-600 italic">{pedido.notas}</p>
+                    <p className="text-xs text-gray-600 italic truncate">{pedido.notas}</p>
                   )}
 
-                  <div className="flex gap-2">
-                    {pedido.estado === ESTADOS_PEDIDO.BORRADOR && (
-                      <>
+                  <div className="space-y-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => navigate(`/Pedido-Stock/${pedido.id}`)}
+                      className="w-full border-blue-300 text-blue-700 hover:bg-blue-50"
+                    >
+                      <Eye className="w-4 h-4 mr-1" />
+                      Ver Detalle
+                    </Button>
+
+                    <div className="flex gap-2">
+                      {pedido.estado === ESTADOS_PEDIDO.BORRADOR && (
+                        <>
+                          <Button
+                            size="sm"
+                            onClick={() => handleCursar(pedido.id)}
+                            className="flex-1 bg-blue-600 hover:bg-blue-700"
+                          >
+                            <Send className="w-4 h-4 mr-1" />
+                            Cursar
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleDelete(pedido.id)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </>
+                      )}
+                      {pedido.estado === ESTADOS_PEDIDO.CURSADO && (
                         <Button
                           size="sm"
-                          onClick={() => handleCursar(pedido.id)}
-                          className="flex-1 bg-blue-600 hover:bg-blue-700"
+                          onClick={() => navigate(`/Pedido-Stock/${pedido.id}`)}
+                          className="flex-1 bg-green-600 hover:bg-green-700"
                         >
-                          <Send className="w-4 h-4 mr-1" />
-                          Cursar
+                          <Package className="w-4 h-4 mr-1" />
+                          Recibir Mercancía
                         </Button>
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => handleDelete(pedido.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </>
-                    )}
-                    {pedido.estado === ESTADOS_PEDIDO.CURSADO && (
-                      <Button
-                        size="sm"
-                        className="flex-1 bg-orange-600 hover:bg-orange-700"
-                      >
-                        <Package className="w-4 h-4 mr-1" />
-                        Recibir Mercancía
-                      </Button>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </CardContent>
               </Card>

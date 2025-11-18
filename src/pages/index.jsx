@@ -14,6 +14,7 @@ import CatalogoStock from "./CatalogoStock";
 import PedidosStock from "./PedidosStock";
 import StockInventario from "./StockInventario";
 import NuevoPedidoStock from "./NuevoPedidoStock";
+import DetallePedidoStock from "./DetallePedidoStock";
 
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
@@ -29,13 +30,39 @@ const PAGES = {
     PedidosStock,
     StockInventario,
     NuevoPedidoStock,
+    DetallePedidoStock,
 }
 
 function _getCurrentPage(url) {
     if (url.endsWith('/')) url = url.slice(0, -1);
     let urlLastPart = url.split('/').pop();
     if (urlLastPart.includes('?')) urlLastPart = urlLastPart.split('?')[0];
-    const pageName = Object.keys(PAGES).find(page => page.toLowerCase() === urlLastPart.toLowerCase());
+
+    // Mapeo de URLs a nombres de página
+    const urlToPageMap = {
+        'catalogo-stock': 'CatalogoStock',
+        'pedidos-stock': 'PedidosStock',
+        'stock-inventario': 'StockInventario',
+        'nuevo-pedido-stock': 'NuevoPedidoStock',
+        'en-proceso': 'EnProceso',
+        'mis-incidencias': 'MisIncidencias',
+        'nueva-incidencia': 'NuevaIncidencia',
+        'enproceso': 'EnProceso',
+        'misincidencias': 'MisIncidencias',
+        'nuevaincidencia': 'NuevaIncidencia',
+        'pendientes': 'Pendientes',
+        'resueltas': 'Resueltas',
+        'dashboard': 'Dashboard',
+        'auth': 'Auth'
+    };
+
+    // Si la URL contiene "pedido-stock" con un ID, es la página de detalle
+    if (url.includes('/Pedido-Stock/') || url.includes('/pedido-stock/')) {
+        return 'DetallePedidoStock';
+    }
+
+    const normalizedUrl = urlLastPart.toLowerCase();
+    const pageName = urlToPageMap[normalizedUrl] || Object.keys(PAGES).find(page => page.toLowerCase() === normalizedUrl);
     return pageName || Object.keys(PAGES)[0];
 }
 
@@ -68,6 +95,7 @@ function PagesContent() {
                 <Route path="/Pedidos-Stock" element={<PedidosStock />} />
                 <Route path="/Stock-Inventario" element={<StockInventario />} />
                 <Route path="/Nuevo-Pedido-Stock" element={<NuevoPedidoStock />} />
+                <Route path="/Pedido-Stock/:id" element={<DetallePedidoStock />} />
             </Routes>
         </Layout>
     );

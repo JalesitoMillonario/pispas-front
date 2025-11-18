@@ -309,10 +309,11 @@ function LayoutContent({ children, user, onLogout, currentPageName }) {
     'Resueltas': 'Resueltas',
     'Nueva-incidencia': 'Nueva Incidencia',
     'Mis-incidencias': 'Mis Incidencias',
-    'Catalogo-Stock': 'Catálogo',
-    'Pedidos-Stock': 'Pedidos',
-    'Stock-Inventario': 'Stock',
-    'Nuevo-Pedido-Stock': 'Nuevo Pedido',
+    'CatalogoStock': 'Catálogo',
+    'PedidosStock': 'Pedidos',
+    'StockInventario': 'Stock',
+    'NuevoPedidoStock': 'Nuevo Pedido',
+    'DetallePedidoStock': 'Detalle Pedido',
     'auth': 'Iniciar Sesión',
     'Auth': 'Iniciar Sesión'
   };
