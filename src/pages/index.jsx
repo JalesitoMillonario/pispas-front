@@ -9,6 +9,12 @@ import EnProceso from "./En-proceso";
 import MisIncidencias from "./Mis-incidencias";
 import NuevaIncidencia from "./Nueva-incidencia";
 
+// Páginas de Stock
+import CatalogoStock from "./CatalogoStock";
+import PedidosStock from "./PedidosStock";
+import StockInventario from "./StockInventario";
+import NuevoPedidoStock from "./NuevoPedidoStock";
+
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 const PAGES = {
@@ -19,6 +25,10 @@ const PAGES = {
     Resueltas,
     MisIncidencias,
     NuevaIncidencia,
+    CatalogoStock,
+    PedidosStock,
+    StockInventario,
+    NuevoPedidoStock,
 }
 
 function _getCurrentPage(url) {
@@ -52,6 +62,12 @@ function PagesContent() {
                 
                 <Route path="/NuevaIncidencia" element={<NuevaIncidencia />} />
                 <Route path="/Nueva-incidencia" element={<NuevaIncidencia />} />
+
+                {/* Rutas de Stock */}
+                <Route path="/Catalogo-Stock" element={<CatalogoStock />} />
+                <Route path="/Pedidos-Stock" element={<PedidosStock />} />
+                <Route path="/Stock-Inventario" element={<StockInventario />} />
+                <Route path="/Nuevo-Pedido-Stock" element={<NuevoPedidoStock />} />
             </Routes>
         </Layout>
     );

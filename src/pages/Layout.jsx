@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { createPageUrl } from "../components/utils";
 import { apiClient } from "../components/apiClient";
-import { 
+import {
   BarChart2,
   ClipboardList,
   Wrench,
@@ -12,7 +12,11 @@ import {
   Plus,
   LogOut,
   User,
-  Menu
+  Menu,
+  Package,
+  FileText,
+  Box,
+  ShoppingCart
 } from "lucide-react";
 import {
   Sidebar,
@@ -59,6 +63,29 @@ const secondaryNavItems = [
     url: "/Nueva-incidencia",
     icon: Plus,
   }
+];
+
+const stockNavItems = [
+  {
+    title: "Catálogo",
+    url: "/Catalogo-Stock",
+    icon: Package,
+  },
+  {
+    title: "Pedidos",
+    url: "/Pedidos-Stock",
+    icon: FileText,
+  },
+  {
+    title: "Stock",
+    url: "/Stock-Inventario",
+    icon: Box,
+  },
+  {
+    title: "Nuevo Pedido",
+    url: "/Nuevo-Pedido-Stock",
+    icon: ShoppingCart,
+  },
 ];
 
 function SidebarToggleButton() {
@@ -109,6 +136,32 @@ function AppSidebar({ user, onLogout, onNavigate }) {
                     asChild 
                     className={`hover:bg-blue-50 hover:text-blue-700 transition-all duration-300 rounded-xl py-3 px-3 ${
                       location.pathname === item.url ? 'bg-blue-100 text-blue-800 shadow-sm font-semibold border border-blue-200' : 'text-blue-700'
+                    }`}
+                  >
+                    <Link to={item.url} onClick={onNavigate} className="flex items-center gap-3">
+                      <item.icon className="w-5 h-5" />
+                      <span className="font-medium">{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Stock */}
+        <SidebarGroup className="mt-4">
+          <SidebarGroupLabel className="text-xs font-semibold text-purple-600 uppercase tracking-wider px-3 py-3">
+            Stock
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              {stockNavItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    className={`hover:bg-purple-50 hover:text-purple-700 transition-all duration-300 rounded-xl py-3 px-3 ${
+                      location.pathname === item.url ? 'bg-purple-100 text-purple-800 shadow-sm font-semibold border border-purple-200' : 'text-purple-700'
                     }`}
                   >
                     <Link to={item.url} onClick={onNavigate} className="flex items-center gap-3">
