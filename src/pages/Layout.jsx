@@ -151,7 +151,7 @@ function AppSidebar({ user, onLogout, onNavigate }) {
 
         {/* Stock */}
         <SidebarGroup className="mt-4">
-          <SidebarGroupLabel className="text-xs font-semibold text-purple-600 uppercase tracking-wider px-3 py-3">
+          <SidebarGroupLabel className="text-xs font-semibold text-blue-600 uppercase tracking-wider px-3 py-3">
             Stock
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -160,8 +160,8 @@ function AppSidebar({ user, onLogout, onNavigate }) {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
-                    className={`hover:bg-purple-50 hover:text-purple-700 transition-all duration-300 rounded-xl py-3 px-3 ${
-                      location.pathname === item.url ? 'bg-purple-100 text-purple-800 shadow-sm font-semibold border border-purple-200' : 'text-purple-700'
+                    className={`hover:bg-blue-50 hover:text-blue-700 transition-all duration-300 rounded-xl py-3 px-3 ${
+                      location.pathname === item.url ? 'bg-blue-100 text-blue-800 shadow-sm font-semibold border border-blue-200' : 'text-blue-700'
                     }`}
                   >
                     <Link to={item.url} onClick={onNavigate} className="flex items-center gap-3">
@@ -309,6 +309,10 @@ function LayoutContent({ children, user, onLogout, currentPageName }) {
     'Resueltas': 'Resueltas',
     'Nueva-incidencia': 'Nueva Incidencia',
     'Mis-incidencias': 'Mis Incidencias',
+    'Catalogo-Stock': 'Catálogo',
+    'Pedidos-Stock': 'Pedidos',
+    'Stock-Inventario': 'Stock',
+    'Nuevo-Pedido-Stock': 'Nuevo Pedido',
     'auth': 'Iniciar Sesión',
     'Auth': 'Iniciar Sesión'
   };

@@ -96,12 +96,12 @@ export default function NuevoPedidoStock() {
       <div className="p-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-12">
-            <ShoppingCart className="mx-auto w-16 h-16 text-purple-400 mb-4" />
-            <p className="text-purple-700 text-xl">No hay pedidos en borrador</p>
-            <p className="text-purple-500 mt-2">Añade piezas desde el catálogo para crear un pedido</p>
+            <ShoppingCart className="mx-auto w-16 h-16 text-blue-400 mb-4" />
+            <p className="text-blue-700 text-xl">No hay pedidos en borrador</p>
+            <p className="text-blue-500 mt-2">Añade piezas desde el catálogo para crear un pedido</p>
             <Button
               onClick={() => navigate("/Catalogo-Stock")}
-              className="mt-6 bg-purple-600 hover:bg-purple-700"
+              className="mt-6 bg-blue-600 hover:bg-blue-700"
             >
               Ir al Catálogo
             </Button>
@@ -115,16 +115,16 @@ export default function NuevoPedidoStock() {
     <div className="p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header Card */}
-        <Card className="border-purple-200">
-          <CardHeader className="bg-gradient-to-r from-purple-50 to-indigo-50">
+        <Card className="border-blue-200">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="bg-purple-600 p-3 rounded-lg">
+                <div className="bg-blue-600 p-3 rounded-lg">
                   <FileText className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-2xl text-purple-900">{pedidoBorrador.numero}</CardTitle>
-                  <p className="text-sm text-purple-600">
+                  <CardTitle className="text-2xl text-blue-900">{pedidoBorrador.numero}</CardTitle>
+                  <p className="text-sm text-blue-600">
                     Creado el {new Date(pedidoBorrador.fecha_creacion).toLocaleDateString()}
                   </p>
                 </div>
@@ -134,17 +134,17 @@ export default function NuevoPedidoStock() {
           </CardHeader>
           <CardContent className="pt-4">
             <div className="grid grid-cols-3 gap-4">
-              <div className="bg-purple-50 p-4 rounded-lg text-center">
-                <p className="text-sm text-purple-600 font-medium">Líneas</p>
-                <p className="text-3xl font-bold text-purple-900">{pedidoBorrador.lineas.length}</p>
+              <div className="bg-blue-50 p-4 rounded-lg text-center">
+                <p className="text-sm text-blue-600 font-medium">Líneas</p>
+                <p className="text-3xl font-bold text-blue-900">{pedidoBorrador.lineas.length}</p>
               </div>
               <div className="bg-indigo-50 p-4 rounded-lg text-center">
                 <p className="text-sm text-indigo-600 font-medium">Total</p>
                 <p className="text-3xl font-bold text-indigo-900">{pedidoBorrador.total.toFixed(2)}€</p>
               </div>
-              <div className="bg-purple-50 p-4 rounded-lg text-center">
-                <p className="text-sm text-purple-600 font-medium">Unidades</p>
-                <p className="text-3xl font-bold text-purple-900">
+              <div className="bg-blue-50 p-4 rounded-lg text-center">
+                <p className="text-sm text-blue-600 font-medium">Unidades</p>
+                <p className="text-3xl font-bold text-blue-900">
                   {pedidoBorrador.lineas.reduce((sum, l) => sum + l.cantidad, 0)}
                 </p>
               </div>
@@ -153,18 +153,18 @@ export default function NuevoPedidoStock() {
         </Card>
 
         {/* Líneas del Pedido */}
-        <Card className="border-purple-200">
-          <CardHeader className="bg-gradient-to-r from-purple-50 to-indigo-50">
-            <CardTitle className="text-purple-900">Líneas del Pedido</CardTitle>
+        <Card className="border-blue-200">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50">
+            <CardTitle className="text-blue-900">Líneas del Pedido</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
             {pedidoBorrador.lineas.length === 0 ? (
               <div className="text-center py-12">
-                <PackageX className="mx-auto w-12 h-12 text-purple-400 mb-3" />
-                <p className="text-purple-700">El pedido no tiene líneas</p>
+                <PackageX className="mx-auto w-12 h-12 text-blue-400 mb-3" />
+                <p className="text-blue-700">El pedido no tiene líneas</p>
                 <Button
                   onClick={() => navigate("/Catalogo-Stock")}
-                  className="mt-4 bg-purple-600 hover:bg-purple-700"
+                  className="mt-4 bg-blue-600 hover:bg-blue-700"
                 >
                   Añadir Piezas
                 </Button>
@@ -172,21 +172,21 @@ export default function NuevoPedidoStock() {
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-purple-100 border-b border-purple-200">
+                  <thead className="bg-blue-100 border-b border-blue-200">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-purple-900 uppercase">Código</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-purple-900 uppercase">Nombre</th>
-                      <th className="px-4 py-3 text-center text-xs font-semibold text-purple-900 uppercase">Unidad</th>
-                      <th className="px-4 py-3 text-right text-xs font-semibold text-purple-900 uppercase">PVP</th>
-                      <th className="px-4 py-3 text-center text-xs font-semibold text-purple-900 uppercase">Cantidad</th>
-                      <th className="px-4 py-3 text-right text-xs font-semibold text-purple-900 uppercase">Subtotal</th>
-                      <th className="px-4 py-3 text-center text-xs font-semibold text-purple-900 uppercase">Acciones</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-blue-900 uppercase">Código</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-blue-900 uppercase">Nombre</th>
+                      <th className="px-4 py-3 text-center text-xs font-semibold text-blue-900 uppercase">Unidad</th>
+                      <th className="px-4 py-3 text-right text-xs font-semibold text-blue-900 uppercase">PVP</th>
+                      <th className="px-4 py-3 text-center text-xs font-semibold text-blue-900 uppercase">Cantidad</th>
+                      <th className="px-4 py-3 text-right text-xs font-semibold text-blue-900 uppercase">Subtotal</th>
+                      <th className="px-4 py-3 text-center text-xs font-semibold text-blue-900 uppercase">Acciones</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-purple-100">
+                  <tbody className="divide-y divide-blue-100">
                     {pedidoBorrador.lineas.map((linea) => (
-                      <tr key={linea.piezaId} className="hover:bg-purple-50 transition-colors">
-                        <td className="px-4 py-3 text-sm font-mono text-purple-800">{linea.codigo}</td>
+                      <tr key={linea.piezaId} className="hover:bg-blue-50 transition-colors">
+                        <td className="px-4 py-3 text-sm font-mono text-blue-800">{linea.codigo}</td>
                         <td className="px-4 py-3 text-sm text-gray-900">{linea.nombre}</td>
                         <td className="px-4 py-3 text-sm text-center text-gray-700">{linea.unidad}</td>
                         <td className="px-4 py-3 text-sm text-right font-semibold text-gray-900">{linea.pvp.toFixed(2)}€</td>
@@ -195,7 +195,7 @@ export default function NuevoPedidoStock() {
                             <Button
                               size="sm"
                               variant="outline"
-                              className="h-7 w-7 p-0 border-purple-300 hover:bg-purple-100"
+                              className="h-7 w-7 p-0 border-blue-300 hover:bg-blue-100"
                               onClick={() => handleUpdateCantidad(linea.piezaId, linea.cantidad - 1)}
                             >
                               <Minus className="w-3 h-3" />
@@ -205,19 +205,19 @@ export default function NuevoPedidoStock() {
                               min="1"
                               value={linea.cantidad}
                               onChange={(e) => handleUpdateCantidad(linea.piezaId, parseInt(e.target.value) || 1)}
-                              className="w-16 h-7 text-center border-purple-200 focus:border-purple-400"
+                              className="w-16 h-7 text-center border-blue-200 focus:border-blue-400"
                             />
                             <Button
                               size="sm"
                               variant="outline"
-                              className="h-7 w-7 p-0 border-purple-300 hover:bg-purple-100"
+                              className="h-7 w-7 p-0 border-blue-300 hover:bg-blue-100"
                               onClick={() => handleUpdateCantidad(linea.piezaId, linea.cantidad + 1)}
                             >
                               <Plus className="w-3 h-3" />
                             </Button>
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-sm text-right font-bold text-purple-900">
+                        <td className="px-4 py-3 text-sm text-right font-bold text-blue-900">
                           {(linea.cantidad * linea.pvp).toFixed(2)}€
                         </td>
                         <td className="px-4 py-3 text-center">
@@ -240,9 +240,9 @@ export default function NuevoPedidoStock() {
         </Card>
 
         {/* Notas */}
-        <Card className="border-purple-200">
-          <CardHeader className="bg-gradient-to-r from-purple-50 to-indigo-50">
-            <CardTitle className="text-purple-900">Notas del Pedido</CardTitle>
+        <Card className="border-blue-200">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50">
+            <CardTitle className="text-blue-900">Notas del Pedido</CardTitle>
           </CardHeader>
           <CardContent className="pt-4">
             <Textarea
@@ -250,9 +250,9 @@ export default function NuevoPedidoStock() {
               value={notas}
               onChange={(e) => setNotas(e.target.value)}
               onBlur={handleUpdateNotas}
-              className="min-h-[100px] border-purple-200 focus:border-purple-400 focus:ring-purple-400"
+              className="min-h-[100px] border-blue-200 focus:border-blue-400 focus:ring-blue-400"
             />
-            <p className="text-xs text-purple-600 mt-2">Las notas se guardan automáticamente</p>
+            <p className="text-xs text-blue-600 mt-2">Las notas se guardan automáticamente</p>
           </CardContent>
         </Card>
 
@@ -269,7 +269,7 @@ export default function NuevoPedidoStock() {
           <Button
             onClick={() => navigate("/Catalogo-Stock")}
             variant="outline"
-            className="border-purple-300 text-purple-700 hover:bg-purple-50"
+            className="border-blue-300 text-blue-700 hover:bg-blue-50"
           >
             <Plus className="w-4 h-4 mr-2" />
             Añadir Más Piezas
@@ -277,7 +277,7 @@ export default function NuevoPedidoStock() {
           <Button
             onClick={handleCursarPedido}
             disabled={pedidoBorrador.lineas.length === 0}
-            className="bg-purple-600 hover:bg-purple-700"
+            className="bg-blue-600 hover:bg-blue-700"
           >
             <Send className="w-4 h-4 mr-2" />
             Cursar Pedido

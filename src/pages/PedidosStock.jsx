@@ -51,9 +51,9 @@ export default function PedidosStock() {
       <div className="p-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-12">
-            <FileText className="mx-auto w-16 h-16 text-purple-400 mb-4" />
-            <p className="text-purple-700 text-xl">No hay pedidos creados</p>
-            <p className="text-purple-500 mt-2">Añade piezas desde el catálogo para crear un pedido</p>
+            <FileText className="mx-auto w-16 h-16 text-blue-400 mb-4" />
+            <p className="text-blue-700 text-xl">No hay pedidos creados</p>
+            <p className="text-blue-500 mt-2">Añade piezas desde el catálogo para crear un pedido</p>
           </div>
         </div>
       </div>
@@ -71,18 +71,18 @@ export default function PedidosStock() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <Card className="border-purple-200 hover:shadow-lg transition-shadow">
-                <CardHeader className="bg-gradient-to-r from-purple-50 to-indigo-50 border-b border-purple-100">
+              <Card className="border-blue-200 hover:shadow-lg transition-shadow">
+                <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="bg-purple-600 p-2 rounded-lg">
+                      <div className="bg-blue-600 p-2 rounded-lg">
                         <FileText className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <CardTitle className="text-base font-bold text-purple-900">
+                        <CardTitle className="text-base font-bold text-blue-900">
                           {pedido.numero}
                         </CardTitle>
-                        <p className="text-xs text-purple-600">
+                        <p className="text-xs text-blue-600">
                           {new Date(pedido.fecha_creacion).toLocaleDateString()}
                         </p>
                       </div>
@@ -93,9 +93,9 @@ export default function PedidosStock() {
 
                 <CardContent className="pt-4 space-y-3">
                   <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="bg-purple-50 p-2 rounded-lg">
-                      <p className="text-xs text-purple-600 font-medium">Líneas</p>
-                      <p className="text-lg font-bold text-purple-900">{pedido.lineas.length}</p>
+                    <div className="bg-blue-50 p-2 rounded-lg">
+                      <p className="text-xs text-blue-600 font-medium">Líneas</p>
+                      <p className="text-lg font-bold text-blue-900">{pedido.lineas.length}</p>
                     </div>
                     <div className="bg-indigo-50 p-2 rounded-lg">
                       <p className="text-xs text-indigo-600 font-medium">Total</p>
@@ -113,7 +113,7 @@ export default function PedidosStock() {
                         <Button
                           size="sm"
                           onClick={() => handleCursar(pedido.id)}
-                          className="flex-1 bg-purple-600 hover:bg-purple-700"
+                          className="flex-1 bg-blue-600 hover:bg-blue-700"
                         >
                           <Send className="w-4 h-4 mr-1" />
                           Cursar
