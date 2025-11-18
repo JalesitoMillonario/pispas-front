@@ -40,8 +40,8 @@ export default function CatalogoStock() {
 
     if (piezasCategoria.length === 0) {
       return (
-        <div className="text-center py-12 text-purple-700">
-          <Package className="mx-auto w-10 h-10 mb-2 text-purple-400" />
+        <div className="text-center py-12 text-blue-700">
+          <Package className="mx-auto w-10 h-10 mb-2 text-blue-400" />
           <p>No hay piezas que coincidan con la búsqueda.</p>
         </div>
       );
@@ -67,20 +67,20 @@ export default function CatalogoStock() {
       <div className="max-w-7xl mx-auto">
         {/* Buscador */}
         <div className="mb-6 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400 w-5 h-5" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400 w-5 h-5" />
           <Input
             type="text"
             placeholder="Buscar por código o nombre de pieza..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 border-purple-200 focus:border-purple-400 focus:ring-purple-400"
+            className="pl-10 border-blue-200 focus:border-blue-400 focus:ring-blue-400"
           />
         </div>
 
         <Tabs defaultValue="CUADRO" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 md:grid-cols-9 gap-1 bg-purple-100">
+          <TabsList className="grid w-full grid-cols-3 md:grid-cols-9 gap-1 bg-blue-100">
             {CATEGORIAS.map((categoria) => (
-              <TabsTrigger key={categoria} value={categoria} className="text-xs data-[state=active]:bg-purple-600 data-[state=active]:text-white">
+              <TabsTrigger key={categoria} value={categoria} className="text-xs data-[state=active]:bg-blue-600 data-[state=active]:text-white">
                 {categoria.split(' ')[0]}
               </TabsTrigger>
             ))}
