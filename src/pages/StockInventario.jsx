@@ -88,6 +88,7 @@ export default function StockInventario() {
               <table className="w-full">
                 <thead className="bg-blue-100 border-b border-blue-200">
                   <tr>
+                    <th className="px-4 py-3 text-center text-xs font-semibold text-blue-900 uppercase">NUM</th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-blue-900 uppercase">Código</th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-blue-900 uppercase">Nombre</th>
                     <th className="px-4 py-3 text-left text-xs font-semibold text-blue-900 uppercase">Categoría</th>
@@ -103,6 +104,15 @@ export default function StockInventario() {
 
                     return (
                       <tr key={pieza.id} className="hover:bg-blue-50 transition-colors">
+                        <td className="px-4 py-3 text-center">
+                          {pieza.num ? (
+                            <Badge variant="outline" className="bg-blue-100 text-blue-700 border-blue-300 text-xs">
+                              #{pieza.num}
+                            </Badge>
+                          ) : (
+                            <span className="text-gray-400 text-xs">-</span>
+                          )}
+                        </td>
                         <td className="px-4 py-3 text-sm font-mono text-blue-800">{pieza.codigo}</td>
                         <td className="px-4 py-3 text-sm text-gray-900">{pieza.nombre}</td>
                         <td className="px-4 py-3 text-xs text-gray-600">{pieza.categoria.split(' ')[0]}</td>
