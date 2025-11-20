@@ -11,15 +11,15 @@ export const CATEGORIAS = [
 ];
 
 export const CATEGORIA_DIAGRAMS = {
-  "CUADRO": "/diagrams/image1.png",
+  "CUADRO": "/diagrams/image2.png",
   "FRONTAL": "/diagrams/image12.png",
-  "MOTOR Y HORQUILLA INFERIOR": "/diagrams/image10.png",
-  "PARTES ELECTRICAS": "/diagrams/image2.png",
-  "MANILLAR Y OTROS COMPONENTES": "/diagrams/image9.png",
-  "CARROCERÍA I": "/diagrams/image11.png",
-  "CARROCERIA II": "/diagrams/image4.png",
-  "CARROCERIA III": "/diagrams/image7.png",
-  "CARROCERÍA IV": "/diagrams/image6.png"
+  "MOTOR Y HORQUILLA INFERIOR": "/diagrams/image8.png",
+  "PARTES ELECTRICAS": "/diagrams/image9.png",
+  "MANILLAR Y OTROS COMPONENTES": "/diagrams/image10.png",
+  "CARROCERÍA I": "/diagrams/image7.png",
+  "CARROCERIA II": "/diagrams/image5.png",
+  "CARROCERIA III": "/diagrams/image4.png",
+  "CARROCERÍA IV": "/diagrams/image11.png"
 };
 
 export const PIEZAS = [
@@ -196,6 +196,38 @@ export const PIEZAS = [
   { id: 171, num: '10', codigo: '150550002W', nombre: 'Baúl city', unidad: 'PC', pvp: 53.24, categoria: 'CARROCERÍA IV' }
 ];
 
+// Información de KITs - qué piezas contiene cada kit
+export const KIT_CONTENTS = {
+  '110070017W': { // Soporte principal
+    descripcion: 'Kit completo de soporte principal',
+    incluye: ['Soporte', 'Tornillos de fijación', 'Gomas', 'Herrajes']
+  },
+  '120010635C': { // Tubo de horquilla
+    descripcion: 'Set completo de tubo de horquilla',
+    incluye: ['Tubo principal', 'Elementos de fijación', 'Sellos']
+  },
+  '120080072C': { // Rodamientos
+    descripcion: 'Set de rodamientos',
+    incluye: ['Rodamientos superiores', 'Rodamientos inferiores', 'Piezas de soporte']
+  },
+  '170260316C': { // Set montaje de la rueda delantera
+    descripcion: 'Kit de montaje rueda delantera',
+    incluye: ['Tornillos', 'Tuercas', 'Arandelas', 'Elementos de fijación']
+  },
+  '130280150C': { // Protección de apagado, soporte lateral
+    descripcion: 'Kit protección soporte lateral',
+    incluye: ['Interruptor de protección', 'Cableado', 'Soportes']
+  },
+  '200240074C': { // Perno, Bloqueo, Barra de manija
+    descripcion: 'Set de pernos y bloqueos',
+    incluye: ['Pernos de bloqueo', 'Arandelas', 'Tuercas de seguridad']
+  },
+  '170640109C': { // Espejo (izquierdo y derecho)
+    descripcion: 'Par de espejos retrovisores',
+    incluye: ['Espejo izquierdo', 'Espejo derecho', 'Tornillos de montaje']
+  }
+};
+
 // Helper functions
 export function getPiezasByCategoria(categoria) {
   return PIEZAS.filter(pieza => pieza.categoria === categoria);
@@ -203,7 +235,7 @@ export function getPiezasByCategoria(categoria) {
 
 export function searchPiezas(searchTerm) {
   const term = searchTerm.toLowerCase();
-  return PIEZAS.filter(pieza => 
+  return PIEZAS.filter(pieza =>
     pieza.codigo.toLowerCase().includes(term) ||
     pieza.nombre.toLowerCase().includes(term)
   );
@@ -215,4 +247,16 @@ export function getPiezaById(id) {
 
 export function getPiezaByCodigo(codigo) {
   return PIEZAS.find(pieza => pieza.codigo === codigo);
+}
+
+export function isKit(pieza) {
+  return pieza.unidad.toUpperCase() === 'SET' || pieza.unidad.toUpperCase() === 'KIT';
+}
+
+export function getKitInfo(pieza) {
+  if (!isKit(pieza)) return null;
+  return KIT_CONTENTS[pieza.codigo] || {
+    descripcion: `Kit completo: ${pieza.nombre}`,
+    incluye: ['Componentes múltiples incluidos en este set']
+  };
 }
