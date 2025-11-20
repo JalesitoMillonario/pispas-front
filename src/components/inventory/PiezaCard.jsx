@@ -29,7 +29,14 @@ export default function PiezaCard({ pieza, onAddToPedido }) {
                 <CardTitle className="text-base font-semibold text-blue-900 leading-tight">
                   {pieza.nombre}
                 </CardTitle>
-                <p className="text-xs text-blue-600 mt-1 font-mono">{pieza.codigo}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  {pieza.num && (
+                    <Badge variant="outline" className="bg-blue-100 text-blue-700 border-blue-300 text-xs">
+                      #{pieza.num}
+                    </Badge>
+                  )}
+                  <p className="text-xs text-blue-600 font-mono">{pieza.codigo}</p>
+                </div>
               </div>
             </div>
             <Badge
