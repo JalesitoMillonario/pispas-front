@@ -43,54 +43,56 @@ export default function CatalogoStock() {
 
     if (piezasCategoria.length === 0) {
       return (
-        <div className="space-y-6">
-          {/* Diagrama de explosión */}
+        <div className="space-y-4 sm:space-y-6">
+          {/* Diagrama de explosión optimizado móvil */}
           {diagramUrl && (
-            <Card className="p-4 bg-white border-blue-200">
-              <div className="flex items-center gap-2 mb-3">
-                <ImageIcon className="w-5 h-5 text-blue-600" />
-                <h3 className="font-semibold text-blue-900">Diagrama de Explosión</h3>
+            <Card className="p-3 sm:p-4 bg-white border-blue-200">
+              <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                <ImageIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                <h3 className="text-sm sm:text-base font-semibold text-blue-900">Diagrama de Explosión</h3>
               </div>
-              <div className="bg-gray-50 rounded-lg p-4 flex justify-center">
+              <div className="bg-gray-50 rounded-lg p-2 sm:p-4 flex justify-center">
                 <img
                   src={diagramUrl}
                   alt={`Diagrama de ${categoria}`}
-                  className="max-w-full h-auto max-h-96 object-contain"
+                  className="max-w-full h-auto max-h-64 sm:max-h-96 object-contain"
                 />
               </div>
             </Card>
           )}
-          <div className="text-center py-12 text-blue-700">
-            <Package className="mx-auto w-10 h-10 mb-2 text-blue-400" />
-            <p>No hay piezas que coincidan con la búsqueda.</p>
+          <div className="text-center py-8 sm:py-12 text-blue-700">
+            <Package className="mx-auto w-8 h-8 sm:w-10 sm:h-10 mb-2 text-blue-400" />
+            <p className="text-sm sm:text-base">No hay piezas que coincidan con la búsqueda.</p>
           </div>
         </div>
       );
     }
 
     return (
-      <div className="space-y-6">
-        {/* Diagrama de explosión */}
+      <div className="space-y-4 sm:space-y-6">
+        {/* Diagrama de explosión optimizado móvil */}
         {diagramUrl && (
-          <Card className="p-4 bg-white border-blue-200">
-            <div className="flex items-center gap-2 mb-3">
-              <ImageIcon className="w-5 h-5 text-blue-600" />
-              <h3 className="font-semibold text-blue-900">Diagrama de Explosión - {categoria}</h3>
+          <Card className="p-3 sm:p-4 bg-white border-blue-200">
+            <div className="flex items-center gap-2 mb-2 sm:mb-3">
+              <ImageIcon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+              <h3 className="text-sm sm:text-base font-semibold text-blue-900 truncate">
+                Diagrama - {categoria.split(' ')[0]}
+              </h3>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4 flex justify-center">
+            <div className="bg-gray-50 rounded-lg p-2 sm:p-4 flex justify-center">
               <img
                 src={diagramUrl}
                 alt={`Diagrama de ${categoria}`}
-                className="max-w-full h-auto max-h-96 object-contain cursor-pointer hover:scale-105 transition-transform"
+                className="max-w-full h-auto max-h-64 sm:max-h-96 object-contain cursor-pointer active:scale-95 sm:hover:scale-105 transition-transform"
                 onClick={() => window.open(diagramUrl, '_blank')}
-                title="Click para ver en tamaño completo"
+                title="Toca para ver en tamaño completo"
               />
             </div>
           </Card>
         )}
 
-        {/* Grid de piezas */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* Grid de piezas optimizado móvil: 1 col móvil, 2 tablet, 3 desktop */}
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence>
             {piezasCategoria.map((pieza) => (
               <PiezaCard
@@ -106,31 +108,38 @@ export default function CatalogoStock() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-3 sm:p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Buscador */}
-        <div className="mb-6 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400 w-5 h-5" />
+        {/* Buscador optimizado móvil */}
+        <div className="mb-4 sm:mb-6 relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400 w-4 h-4 sm:w-5 sm:h-5" />
           <Input
             type="text"
-            placeholder="Buscar por código o nombre de pieza..."
+            placeholder="Buscar pieza..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 border-blue-200 focus:border-blue-400 focus:ring-blue-400"
+            className="pl-9 sm:pl-10 h-11 sm:h-10 text-sm sm:text-base border-blue-200 focus:border-blue-400 focus:ring-blue-400"
           />
         </div>
 
         <Tabs defaultValue="CUADRO" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 md:grid-cols-9 gap-1 bg-blue-100">
-            {CATEGORIAS.map((categoria) => (
-              <TabsTrigger key={categoria} value={categoria} className="text-xs data-[state=active]:bg-blue-600 data-[state=active]:text-white">
-                {categoria.split(' ')[0]}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          {/* Tabs optimizadas para móvil - scrollables */}
+          <div className="overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0 pb-2">
+            <TabsList className="inline-flex w-auto min-w-full sm:grid sm:w-full sm:grid-cols-9 gap-1 bg-blue-100 h-auto">
+              {CATEGORIAS.map((categoria) => (
+                <TabsTrigger
+                  key={categoria}
+                  value={categoria}
+                  className="text-xs px-2 sm:px-3 py-2 whitespace-nowrap data-[state=active]:bg-blue-600 data-[state=active]:text-white flex-shrink-0"
+                >
+                  {categoria.split(' ')[0]}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
 
           {CATEGORIAS.map((categoria) => (
-            <TabsContent key={categoria} value={categoria} className="mt-6">
+            <TabsContent key={categoria} value={categoria} className="mt-4 sm:mt-6">
               {renderPiezasList(categoria)}
             </TabsContent>
           ))}

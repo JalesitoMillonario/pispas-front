@@ -325,10 +325,11 @@ function LayoutContent({ children, user, onLogout, currentPageName }) {
       <AppSidebar user={user} onLogout={onLogout} onNavigate={handleNavigate} />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="bg-white/80 backdrop-blur-sm border-b border-blue-200/60 px-6 py-4 flex items-center gap-4 sticky top-0 z-10 shadow-sm">
+        {/* Header optimizado para móvil */}
+        <header className="bg-white/80 backdrop-blur-sm border-b border-blue-200/60 px-3 sm:px-6 py-3 sm:py-4 flex items-center gap-2 sm:gap-4 sticky top-0 z-10 shadow-sm">
           <SidebarToggleButton />
-          <div className="flex-1">
-            <h1 className="text-2xl font-bold text-blue-900">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-lg sm:text-2xl font-bold text-blue-900 truncate">
               {pageTitle}
             </h1>
           </div>
