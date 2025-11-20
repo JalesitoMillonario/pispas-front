@@ -123,14 +123,14 @@ export default function CatalogoStock() {
         </div>
 
         <Tabs defaultValue="CUADRO" className="w-full">
-          {/* Tabs optimizadas para móvil - scrollables */}
-          <div className="overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0 pb-2">
-            <TabsList className="inline-flex w-auto min-w-full sm:grid sm:w-full sm:grid-cols-9 gap-1 bg-blue-100 h-auto">
+          {/* Tabs optimizadas para móvil - scrollables con separación mejorada */}
+          <div className="overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0 pb-3 mb-2 sm:mb-0">
+            <TabsList className="inline-flex w-auto min-w-full sm:grid sm:w-full sm:grid-cols-9 gap-1 bg-blue-100 h-auto mb-4 sm:mb-0">
               {CATEGORIAS.map((categoria) => (
                 <TabsTrigger
                   key={categoria}
                   value={categoria}
-                  className="text-xs px-2 sm:px-3 py-2 whitespace-nowrap data-[state=active]:bg-blue-600 data-[state=active]:text-white flex-shrink-0"
+                  className="text-xs px-3 sm:px-3 py-2.5 whitespace-nowrap data-[state=active]:bg-blue-600 data-[state=active]:text-white flex-shrink-0"
                 >
                   {categoria.split(' ')[0]}
                 </TabsTrigger>
