@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { Package, Search } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Package, Search, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
-import { CATEGORIAS, getPiezasByCategoria, searchPiezas } from "@/data/piezas";
+import { CATEGORIAS, CATEGORIA_DIAGRAMS, getPiezasByCategoria, searchPiezas } from "@/data/piezas";
 import { createPedido, addLineaPedido, getPedidos, ESTADOS_PEDIDO } from "@/api/stockService";
 import PiezaCard from "../components/inventory/PiezaCard";
 
@@ -38,26 +39,68 @@ export default function CatalogoStock() {
       );
     }
 
+    const diagramUrl = CATEGORIA_DIAGRAMS[categoria];
+
     if (piezasCategoria.length === 0) {
       return (
-        <div className="text-center py-12 text-blue-700">
-          <Package className="mx-auto w-10 h-10 mb-2 text-blue-400" />
-          <p>No hay piezas que coincidan con la búsqueda.</p>
+        <div className="space-y-6">
+          {/* Diagrama de explosión */}
+          {diagramUrl && (
+            <Card className="p-4 bg-white border-blue-200">
+              <div className="flex items-center gap-2 mb-3">
+                <ImageIcon className="w-5 h-5 text-blue-600" />
+                <h3 className="font-semibold text-blue-900">Diagrama de Explosión</h3>
+              </div>
+              <div className="bg-gray-50 rounded-lg p-4 flex justify-center">
+                <img
+                  src={diagramUrl}
+                  alt={`Diagrama de ${categoria}`}
+                  className="max-w-full h-auto max-h-96 object-contain"
+                />
+              </div>
+            </Card>
+          )}
+          <div className="text-center py-12 text-blue-700">
+            <Package className="mx-auto w-10 h-10 mb-2 text-blue-400" />
+            <p>No hay piezas que coincidan con la búsqueda.</p>
+          </div>
         </div>
       );
     }
 
     return (
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <AnimatePresence>
-          {piezasCategoria.map((pieza) => (
-            <PiezaCard
-              key={pieza.id}
-              pieza={pieza}
-              onAddToPedido={handleAddToPedido}
-            />
-          ))}
-        </AnimatePresence>
+      <div className="space-y-6">
+        {/* Diagrama de explosión */}
+        {diagramUrl && (
+          <Card className="p-4 bg-white border-blue-200">
+            <div className="flex items-center gap-2 mb-3">
+              <ImageIcon className="w-5 h-5 text-blue-600" />
+              <h3 className="font-semibold text-blue-900">Diagrama de Explosión - {categoria}</h3>
+            </div>
+            <div className="bg-gray-50 rounded-lg p-4 flex justify-center">
+              <img
+                src={diagramUrl}
+                alt={`Diagrama de ${categoria}`}
+                className="max-w-full h-auto max-h-96 object-contain cursor-pointer hover:scale-105 transition-transform"
+                onClick={() => window.open(diagramUrl, '_blank')}
+                title="Click para ver en tamaño completo"
+              />
+            </div>
+          </Card>
+        )}
+
+        {/* Grid de piezas */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <AnimatePresence>
+            {piezasCategoria.map((pieza) => (
+              <PiezaCard
+                key={pieza.id}
+                pieza={pieza}
+                onAddToPedido={handleAddToPedido}
+              />
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
     );
   };
