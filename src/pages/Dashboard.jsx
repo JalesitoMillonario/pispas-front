@@ -171,29 +171,29 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-3 sm:p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <motion.div 
+        {/* Header optimizado móvil */}
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-4 sm:mb-8"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <img 
+          <div className="flex items-center gap-2 sm:gap-3 mb-2">
+            <img
               src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68d79d68248f2c4c7c55e84e/4fa695163_images.jpeg"
               alt="Pispas Motos"
-              className="w-12 h-12 rounded-full shadow-lg object-cover"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full shadow-lg object-cover flex-shrink-0"
             />
-            <div>
-              <h1 className="text-3xl font-bold text-blue-900">Panel de Control</h1>
-              <p className="text-blue-600 font-medium">Vista general del sistema de incidencias</p>
+            <div className="min-w-0">
+              <h1 className="text-xl sm:text-3xl font-bold text-blue-900 truncate">Panel de Control</h1>
+              <p className="text-xs sm:text-base text-blue-600 font-medium truncate">Vista general del sistema</p>
             </div>
           </div>
         </motion.div>
 
-        {/* Stats Cards Row 1 - NUEVO ORDEN */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Stats Cards Row 1 - Grid optimizado móvil */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-4 sm:mb-8">
           <StatCard 
             title="Pendientes" 
             value={stats.open} 
@@ -232,8 +232,8 @@ export default function Dashboard() {
           />
         </div>
 
-        {/* Stats Cards Row 2 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {/* Stats Cards Row 2 - Grid optimizado móvil */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-4 sm:mb-8">
           <StatCard 
             title="Críticas" 
             value={stats.critical} 
