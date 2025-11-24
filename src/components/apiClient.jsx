@@ -194,6 +194,72 @@ class ApiClient {
         return this.request('/users');
       },
     },
+
+    Stock: {
+      // Listar todos los items de stock con filtros opcionales
+      list: async (params = {}) => {
+        const queryString = new URLSearchParams(params).toString();
+        const url = `/stock${queryString ? '?' + queryString : ''}`;
+        return this.request(url, { method: 'GET' });
+      },
+
+      // Obtener un item específico por ID
+      get: async (id) => {
+        return this.request(`/stock/${id}`, { method: 'GET' });
+      },
+
+      // Buscar item por SKU
+      getBySku: async (sku) => {
+        return this.request(`/stock/sku/${sku}`, { method: 'GET' });
+      },
+
+      // Crear nuevo item de stock
+      create: async (data) => {
+        return this.request('/stock', {
+          method: 'POST',
+          body: JSON.stringify(data),
+        });
+      },
+
+      // Actualizar item existente
+      update: async (id, data) => {
+        return this.request(`/stock/${id}`, {
+          method: 'PUT',
+          body: JSON.stringify(data),
+        });
+      },
+
+      // Eliminar item
+      delete: async (id) => {
+        return this.request(`/stock/${id}`, { method: 'DELETE' });
+      },
+
+      // Obtener items con stock bajo
+      lowStock: async () => {
+        return this.request('/stock/low-stock', { method: 'GET' });
+      },
+
+      // Obtener estadísticas de inventario
+      stats: async () => {
+        return this.request('/stock/stats', { method: 'GET' });
+      },
+
+      // Agregar stock (entrada de inventario)
+      addStock: async (id, quantity, notes = '') => {
+        return this.request(`/stock/${id}/add-stock`, {
+          method: 'POST',
+          body: JSON.stringify({ quantity, notes }),
+        });
+      },
+
+      // Quitar stock (salida de inventario)
+      removeStock: async (id, quantity, reason = '') => {
+        return this.request(`/stock/${id}/remove-stock`, {
+          method: 'POST',
+          body: JSON.stringify({ quantity, reason }),
+        });
+      },
+    },
   };
 
   memory = {
