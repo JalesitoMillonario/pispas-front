@@ -1,176 +1,144 @@
-// ✅ Cliente API completamente independiente - SIN dependencias de base44
 const API_BASE_URL = 'https://pispas.bobinadosdumalek.es/api';
 
 class ApiClient {
   constructor() {
-    this.token = localStorage.getItem('auth_token');
-    console.log('🔧 ApiClient initialized. Token exists:', !!this.token);
+    this.baseUrl = API_BASE_URL;
+    this.token = localStorage.getItem('token');
   }
 
   setToken(token) {
     this.token = token;
-    localStorage.setItem('auth_token', token);
-    console.log('✅ Token saved to localStorage');
-  }
-
-  clearToken() {
-    this.token = null;
-    localStorage.removeItem('auth_token');
-    console.log('🗑️ Token cleared from localStorage');
-  }
-
-  getHeaders() {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    if (this.token) {
-      headers['Authorization'] = `Bearer ${this.token}`;
+    if (token) {
+      localStorage.setItem('token', token);
+    } else {
+      localStorage.removeItem('token');
     }
-    return headers;
+  }
+
+  getToken() {
+    return this.token || localStorage.getItem('token');
   }
 
   async request(endpoint, options = {}) {
-    const url = `${API_BASE_URL}${endpoint}`;
-    const config = {
-      ...options,
-      headers: {
-        ...this.getHeaders(),
-        ...options.headers,
-      },
+    const url = `${this.baseUrl}${endpoint}`;
+    const headers = {
+      'Content-Type': 'application/json',
+      ...options.headers,
     };
 
-    console.log('📤 Making request:', {
-      method: config.method || 'GET',
-      url,
-      hasToken: !!this.token
-    });
+    const token = this.getToken();
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
 
     try {
-      const response = await fetch(url, config);
+      console.log(`🌐 API Request: ${options.method || 'GET'} ${endpoint}`);
       
-      console.log('📥 Response received:', {
-        status: response.status,
-        statusText: response.statusText
+      const response = await fetch(url, {
+        ...options,
+        headers,
       });
 
-      if (response.status === 401) {
-        this.clearToken();
-        throw new Error('Unauthorized - Por favor inicia sesión');
-      }
-
-      if (!response.ok) {
-        const error = await response.json().catch(() => ({ 
-          error: `HTTP ${response.status}: ${response.statusText}` 
-        }));
-        console.error('❌ Request failed:', error);
-        throw new Error(error.error || error.message || `Request failed with status ${response.status}`);
-      }
-
+      // Manejar respuesta vacía (204)
       if (response.status === 204) {
         return null;
       }
 
       const data = await response.json();
-      console.log('✅ Request successful');
+
+      if (!response.ok) {
+        console.error('❌ API Error:', data);
+        throw new Error(data.message || 'Error en la petición');
+      }
+
       return data;
     } catch (error) {
-      console.error('❌ Request error:', error);
+      console.error('❌ Request failed:', error);
       throw error;
     }
   }
 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // AUTENTICACIÓN
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   auth = {
     login: async (email, password) => {
-      console.log('🔐 Attempting login for:', email);
       const data = await this.request('/auth/login', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
       });
-      console.log('✅ Login successful, saving token...');
-      this.setToken(data.token);
-      return data.user;
+      
+      if (data.token) {
+        this.setToken(data.token);
+      }
+      
+      return data;
     },
 
     logout: async () => {
-      console.log('👋 Logging out...');
       try {
         await this.request('/auth/logout', { method: 'POST' });
-      } catch (error) {
-        console.error('Error during logout:', error);
+      } finally {
+        this.setToken(null);
       }
-      this.clearToken();
     },
 
     me: async () => {
-      console.log('👤 Fetching current user...');
-      return this.request('/auth/me');
+      return this.request('/auth/me', { method: 'GET' });
     },
 
     updateMe: async (userData) => {
-      console.log('📝 Updating current user...');
       return this.request('/auth/me', {
         method: 'PUT',
         body: JSON.stringify(userData),
       });
     },
-
-    isAuthenticated: () => {
-      return !!this.token;
-    },
-
-    redirectToLogin: (nextUrl) => {
-      const url = nextUrl ? `/auth?next=${encodeURIComponent(nextUrl)}` : '/auth';
-      window.location.href = url;
-    },
   };
 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // ENTIDADES
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   entities = {
+    // ═══════════════════════════════════════════════
+    // INCIDENCIAS
+    // ═══════════════════════════════════════════════
     Incident: {
-      list: async (sort = '-created_date', limit = 100) => {
-        const params = new URLSearchParams();
-        if (sort) params.append('sort', sort);
-        if (limit) params.append('limit', limit);
-        return this.request(`/incidents?${params.toString()}`);
+      list: async (params = {}) => {
+        const queryString = new URLSearchParams(params).toString();
+        const url = `/incidents${queryString ? '?' + queryString : ''}`;
+        return this.request(url, { method: 'GET' });
       },
 
-      filter: async (filters = {}, sort = '-created_date', limit = 100) => {
-        const params = new URLSearchParams();
-        Object.keys(filters).forEach(key => {
-          if (filters[key] !== undefined && filters[key] !== null && filters[key] !== '') {
-            params.append(key, filters[key]);
-          }
-        });
-        if (sort) params.append('sort', sort);
-        if (limit) params.append('limit', limit);
-        return this.request(`/incidents?${params.toString()}`);
+      filter: async (filters) => {
+        return this.entities.Incident.list(filters);
       },
 
-      create: async (incidentData) => {
+      create: async (data) => {
         return this.request('/incidents', {
           method: 'POST',
-          body: JSON.stringify(incidentData),
+          body: JSON.stringify(data),
         });
       },
 
-      update: async (id, incidentData) => {
+      update: async (id, data) => {
         return this.request(`/incidents/${id}`, {
           method: 'PUT',
-          body: JSON.stringify(incidentData),
+          body: JSON.stringify(data),
         });
       },
 
       delete: async (id) => {
-        return this.request(`/incidents/${id}`, {
-          method: 'DELETE',
-        });
+        return this.request(`/incidents/${id}`, { method: 'DELETE' });
       },
 
       get: async (id) => {
-        return this.request(`/incidents/${id}`);
+        return this.request(`/incidents/${id}`, { method: 'GET' });
       },
 
       listNotes: async (incidentId) => {
-        return this.request(`/incidents/${incidentId}/notes`);
+        return this.request(`/incidents/${incidentId}/notes`, {
+          method: 'GET',
+        });
       },
 
       addNote: async (incidentId, body) => {
@@ -181,20 +149,28 @@ class ApiClient {
       },
 
       getHistory: async (incidentId) => {
-        return this.request(`/incidents/${incidentId}/history`);
+        return this.request(`/incidents/${incidentId}/history`, {
+          method: 'GET',
+        });
       },
     },
 
+    // ═══════════════════════════════════════════════
+    // USUARIOS
+    // ═══════════════════════════════════════════════
     User: {
       me: async () => {
-        return this.request('/auth/me');
+        return this.request('/auth/me', { method: 'GET' });
       },
 
       list: async () => {
-        return this.request('/users');
+        return this.request('/users', { method: 'GET' });
       },
     },
 
+    // ═══════════════════════════════════════════════
+    // STOCK (INVENTARIO)
+    // ═══════════════════════════════════════════════
     Stock: {
       // Listar todos los items de stock con filtros opcionales
       list: async (params = {}) => {
@@ -262,28 +238,37 @@ class ApiClient {
     },
   };
 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // MEMORIA (KEY-VALUE STORAGE)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   memory = {
     list: async () => {
-      return this.request('/memory');
+      return this.request('/memory', { method: 'GET' });
     },
 
     get: async (scope, key) => {
-      return this.request(`/memory/${scope}/${key}`);
+      return this.request(`/memory/${scope}/${key}`, { method: 'GET' });
     },
 
-    set: async (scope, key, value) => {
+    set: async (scope, key, value, expiresAt = null) => {
       return this.request('/memory', {
         method: 'POST',
-        body: JSON.stringify({ scope, key, value }),
+        body: JSON.stringify({ scope, key, value, expiresAt }),
       });
     },
 
     delete: async (scope, key) => {
-      return this.request(`/memory/${scope}/${key}`, {
-        method: 'DELETE',
-      });
+      return this.request(`/memory/${scope}/${key}`, { method: 'DELETE' });
     },
   };
 }
 
-export const apiClient = new ApiClient();
+// Crear instancia única del cliente
+const apiClient = new ApiClient();
+
+// Hacer disponible globalmente para debugging
+if (typeof window !== 'undefined') {
+  window.apiClient = apiClient;
+}
+
+export default apiClient;
