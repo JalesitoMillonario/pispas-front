@@ -63,7 +63,7 @@ export default function NuevaIncidenciaPage() {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-blue-900">Nueva Incidencia</h1>
-              <p className="text-blue-600 font-medium">Registra una nueva incidencia en el sistema</p>
+              <p className="text-blue-600 font-medium">Registra una incidencia en el sistema</p>
             </div>
           </div>
         </motion.div>
