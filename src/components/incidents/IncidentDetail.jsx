@@ -197,13 +197,6 @@ export default function IncidentDetail({ incident, onClose, onUpdate, onDelete }
                 </p>
               </div>
 
-              {incident.scooter_id && (
-                <div>
-                  <p className="text-sm text-gray-500 font-semibold mb-1">ID Moto</p>
-                  <p className="text-base font-semibold text-gray-900">{incident.scooter_id}</p>
-                </div>
-              )}
-
               <div>
                 <p className="text-sm text-gray-500 font-semibold mb-1">Fecha Creación</p>
                 <p className="text-base font-semibold text-gray-900">

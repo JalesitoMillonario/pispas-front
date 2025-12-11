@@ -134,7 +134,7 @@ export default function IncidentCard({ incident, onStatusChange, onView, onDelet
                 <div className="mb-2">
                   <p className="text-xs text-white/70 font-medium mb-1">VIAJE</p>
                   <p className="text-2xl font-bold text-white tracking-wide">
-                    {incident.trip_id || incident.scooter_id || '—'}
+                    {incident.trip_id || '—'}
                   </p>
                 </div>
                 
@@ -282,7 +282,7 @@ export default function IncidentCard({ incident, onStatusChange, onView, onDelet
               ¿Eliminar incidencia?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              ¿Estás seguro de que quieres eliminar la incidencia <span className="font-bold">#{incident.number}</span> del viaje <span className="font-bold">{incident.trip_id || incident.scooter_id}</span>?
+              ¿Estás seguro de que quieres eliminar la incidencia <span className="font-bold">#{incident.number}</span> del viaje <span className="font-bold">{incident.trip_id}</span>?
               <br />
               <span className="text-red-600 font-semibold">Esta acción no se puede deshacer.</span>
             </AlertDialogDescription>
