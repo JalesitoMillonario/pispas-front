@@ -20,7 +20,6 @@ export default function NuevaIncidenciaPage() {
     status: "open",
     priority: "medium",
     category: "mechanical_failure",
-    scooter_id: "",
     trip_id: "",
     location: "",
     user_phone: "",
@@ -145,28 +144,15 @@ export default function NuevaIncidenciaPage() {
                   </Select>
                 </div>
 
-                <div>
+                <div className="md:col-span-2">
                   <Label htmlFor="trip_id" className="text-blue-700 font-semibold">
-                    ID de Viaje
+                    ID de Viaje / Moto
                   </Label>
                   <Input
                     id="trip_id"
                     value={formData.trip_id}
                     onChange={(e) => setFormData({...formData, trip_id: e.target.value})}
-                    placeholder="Ej: TRIP-12345"
-                    className="border-blue-200"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="scooter_id" className="text-blue-700 font-semibold">
-                    ID de Moto
-                  </Label>
-                  <Input
-                    id="scooter_id"
-                    value={formData.scooter_id}
-                    onChange={(e) => setFormData({...formData, scooter_id: e.target.value})}
-                    placeholder="Ej: SCOOTER-123"
+                    placeholder="Ej: TRIP-12345 o SCOOTER-123"
                     className="border-blue-200"
                   />
                 </div>
