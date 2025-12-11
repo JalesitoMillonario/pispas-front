@@ -272,3 +272,11 @@ if (typeof window !== 'undefined') {
 }
 
 export default apiClient;
+
+export { apiClient };
+
+// Método helper para verificar autenticación
+apiClient.auth.isAuthenticated = function() {
+  return !!this.getToken();
+}.bind(apiClient);
+

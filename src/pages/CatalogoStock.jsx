@@ -12,19 +12,20 @@ import PiezaCard from "../components/inventory/PiezaCard";
 export default function CatalogoStock() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleAddToPedido = (pieza) => {
+  const handleAddToPedido = async (pieza) => {
     try {
-      const pedidos = getPedidos();
+      const pedidos = await getPedidos();
       let pedidoBorrador = pedidos.find(p => p.estado === ESTADOS_PEDIDO.BORRADOR);
 
       if (!pedidoBorrador) {
-        pedidoBorrador = createPedido({ notas: 'Pedido creado desde catálogo' });
+        pedidoBorrador = await createPedido({ notas: 'Pedido creado desde catálogo' });
       }
 
-      addLineaPedido(pedidoBorrador.id, pieza, 1);
+      await addLineaPedido(pedidoBorrador.id, pieza, 1);
       toast.success(`${pieza.nombre} añadido al pedido`);
     } catch (error) {
       toast.error('Error al añadir pieza al pedido');
+      console.error(error);
     }
   };
 

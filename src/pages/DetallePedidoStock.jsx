@@ -12,8 +12,8 @@ export default function DetallePedidoStock() {
   const navigate = useNavigate();
   const [pedido, setPedido] = useState(null);
 
-  const loadPedido = () => {
-    const pedidoData = getPedidoById(parseInt(id));
+  const loadPedido = async () => {
+    const pedidoData = await getPedidoById(id);
     setPedido(pedidoData);
   };
 
@@ -21,17 +21,17 @@ export default function DetallePedidoStock() {
     loadPedido();
   }, [id]);
 
-  const handleRecibirMercancia = () => {
+  const handleRecibirMercancia = async () => {
     try {
       // Recibir todas las líneas con la cantidad pedida
       const lineasRecibidas = pedido.lineas.map(linea => ({
-        piezaId: linea.piezaId,
+        lineaId: linea.id,
         cantidadRecibida: linea.cantidad - (linea.cantidad_recibida || 0)
       }));
 
-      recibirPedido(pedido.id, lineasRecibidas);
+      await recibirPedido(pedido.id, lineasRecibidas);
       toast.success("Mercancía recibida correctamente");
-      loadPedido();
+      navigate('/Stock-Inventario');
     } catch (error) {
       toast.error(error.message);
     }

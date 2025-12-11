@@ -20,7 +20,6 @@ export default function NuevaIncidenciaPage() {
     status: "open",
     priority: "medium",
     category: "mechanical_failure",
-    scooter_id: "",
     trip_id: "",
     location: "",
     user_phone: "",
@@ -41,7 +40,7 @@ export default function NuevaIncidenciaPage() {
       }
       
       await apiClient.entities.Incident.create(dataToSubmit);
-      navigate("/Pendientes");
+      navigate("/pendientes");
     } catch (error) {
       console.error('Error creating incident:', error);
       alert('Error al crear la incidencia. Por favor, intenta de nuevo.');
@@ -64,7 +63,7 @@ export default function NuevaIncidenciaPage() {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-blue-900">Nueva Incidencia</h1>
-              <p className="text-blue-600 font-medium">Registra una nueva incidencia en el sistema</p>
+              <p className="text-blue-600 font-medium">Registra una incidencia en el sistema</p>
             </div>
           </div>
         </motion.div>
@@ -145,7 +144,7 @@ export default function NuevaIncidenciaPage() {
                   </Select>
                 </div>
 
-                <div>
+                <div className="md:col-span-2">
                   <Label htmlFor="trip_id" className="text-blue-700 font-semibold">
                     ID de Viaje
                   </Label>
@@ -154,19 +153,6 @@ export default function NuevaIncidenciaPage() {
                     value={formData.trip_id}
                     onChange={(e) => setFormData({...formData, trip_id: e.target.value})}
                     placeholder="Ej: TRIP-12345"
-                    className="border-blue-200"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="scooter_id" className="text-blue-700 font-semibold">
-                    ID de Moto
-                  </Label>
-                  <Input
-                    id="scooter_id"
-                    value={formData.scooter_id}
-                    onChange={(e) => setFormData({...formData, scooter_id: e.target.value})}
-                    placeholder="Ej: SCOOTER-123"
                     className="border-blue-200"
                   />
                 </div>
@@ -241,7 +227,7 @@ export default function NuevaIncidenciaPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => navigate("/Pendientes")}
+                  onClick={() => navigate("/pendientes")}
                   disabled={isSubmitting}
                 >
                   Cancelar
