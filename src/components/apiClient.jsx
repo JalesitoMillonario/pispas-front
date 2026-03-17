@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://pispas.bobinadosdumalek.es/api';
+const API_BASE_URL = '/api';;
 
 class ApiClient {
   constructor() {
